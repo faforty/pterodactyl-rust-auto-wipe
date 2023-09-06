@@ -6,6 +6,7 @@ Scheduling tool built with nodejs to automatically wipe Rust servers hosted on t
 * Wipe multiple servers with different wipe schedules
 * Force wipe support (watches for rust updates on first thursday of the month)
 * Delete files with glob file matching
+* Automatically change host name
 * Automatically change map seed or custom map url from predefined list
 * Generate random map seed
 * Detailed wipe logs
@@ -148,6 +149,44 @@ Randomly generated map seeds, predefined map seeds and custom map urls are suppo
   },
   "servers": [
     {
+      "changehostname": true,
+      "hostname": "Vanilla | FULL WIPE {month_two}/{day_two}",
+      // The hostname format.
+      // Replacements include:
+      //
+      // {tz_one} = Timezone in TTT format (e.g. MST).
+      // {tz_two} = Timezone offset in ±hhmm format (e.g. +0100).
+      // {tz_three} = Timezone offset in ±hh format (e.g. +01).
+      //
+      // {month_str_short} = Month in TTT format (e.g. Jan).
+      // {month_str_long} = Full month string (e.g. January).
+      //
+      // {week_day_str_short} = Week day in TTT format (e.g. Mon).
+      // {week_day_str_long} = Full week day string (e.g. Monday).
+      //
+      // {year_one} = Year in TT format (e.g. 22).
+      // {year_two} = Full year (e.g. 2022).
+      //
+      // {month_one} = Month in TT format (e.g. 01).
+      // {month_two} = Month in T format (e.g. 1).
+      // {month_three} = Month in _T format (e.g. 1).
+      //
+      // {day_one} = Day in TT format (e.g. 01).
+      // {day_two} = Day in T format (e.g. 1).
+      // {day_three} = Day in _T format (e.g. 1).
+      //
+      // {hour_one} = Hour in TT 12 HR format (e.g. 05).
+      // {hour_two} = Hour in T 12 HR format (e.g. 5).
+      // {hour_three} = Hour in TT 24 HR format (e.g. 17).
+      //
+      // {min_one} = Minute in TT format (e.g. 06).
+      // {min_two} = Minute in T format (e.g. 6).
+      //
+      // {sec_one} = Second in TT format (e.g. 07).
+      // {sec_two} = Second in T format (e.g. 7).
+      //
+      // {mark_one} = 12-HR mark as TT format (e.g. PM or AM).
+      // {mark_two} = 12-HR mark as tt format (e.g. pm or am).
       "_comment": "Weekly wipes every Thursday @ 2PM, monthly BP wipes",
       "enabled": true,
       "serverId": "0",

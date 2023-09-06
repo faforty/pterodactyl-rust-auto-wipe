@@ -10,6 +10,8 @@ import { setTimeout } from 'timers/promises';
 import dayjs from 'dayjs';
 import dayjs_utc from 'dayjs/plugin/utc.js';
 import dayjs_timezone from 'dayjs/plugin/timezone.js';
+import { formatTitle } from './utils/format.js'
+
 dayjs.extend(dayjs_utc);
 dayjs.extend(dayjs_timezone);
 
@@ -216,7 +218,12 @@ function startWipe(wipeCfg, wipeSchedule, isForceWipe = false) {
       }
       return changeMapSeed(wipeCfg.serverId, seed);
     })
-    .then(() => startServer(wipeCfg.serverId))
+    .then(() => {
+      if (wipeCfg.changehostname && wipeCfg.hostname) {
+        loggers[wipeCfg.serverId].log('change host name');
+        return changeHostName(wipeCfg.serverId, formatTitle(wipeCfg.hostname))
+      }
+    })
     .then(() => {
       loggers[wipeCfg.serverId].log('wipe complete');
     })
@@ -425,6 +432,11 @@ function changeMapSeed(serverId, mapSeed) {
 function changeMapURL(serverId, mapURL) {
   loggers[serverId].log(`change server ${serverId} map url ${mapURL}`);
   return updateServerVariable(serverId, "MAP_URL", mapURL);
+}
+
+function changeHostName(serverId, hostName) {
+  loggers[serverId].log(`change server ${serverId} HostName ${hostName}`);
+  return updateServerVariable(serverId, "HOSTNAME", hostName);
 }
 
 function sendMessage(serverId, msg) {
